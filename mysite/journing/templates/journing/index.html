@@ -1,0 +1,68 @@
+{% extends 'journing/base.html' %} 
+{%load static%}
+
+{% block headcontent%}
+<link rel="stylesheet" href="{% static 'journing/styles/index.css'%}">
+<link rel="stylesheet" href="{% static 'journing/styles/page_nav.css'%}">
+{% endblock headcontent%}
+
+{% block content%}
+
+<!-- explore page html -->
+<nav>
+    <div class="background-video">
+        <video autoplay loop muted plays-inline class="promo-video">
+            <source src="{% static 'journing/videos/promo.mp4'  %}" type="video/mp4">
+        </video>
+    </div>
+
+{% comment %} check if either is the first page or no query is passed to the url so that the explore section actually show up {% endcomment %}
+{% if not page_obj.has_previous and not search%}
+    <div class="explore-div">
+        <h1 >
+            Singapore
+        </h1>
+            
+        <a href="#index-main-js">Explore</a>
+    </div>
+
+{% endif %}
+</nav>
+
+<!-- main page html -->
+
+{% if is_paginated %}
+{% comment %} basically if not first page, the class for the index-main need to be changed to ensure the styling is correct when no explore section {% endcomment %}
+    {% if not page_obj.has_previous and not search%}
+        <main class='index-main-first-page' id='index-main-js'>        
+    {% else %}
+        <main class='index-main-not-first-page' id='index-main-js'>        
+    {% endif %}
+{% else %}
+        <main class='index-main-not-first-page' id='index-main-js'>        
+{% endif %}
+
+{% comment %} loop and display every city in the database {% endcomment %}
+        {% for city in cities%}
+        <div class='thumbnail-grid'>
+            <div>
+                {% comment %} click here for detail view on the selected city --> direct to the sight list page{% endcomment %}
+                <a href="{% url 'journing:sights_list' city.slug %}">
+                <img class='thumbnail' src="{% static '/cityimgs/'%}{{city.img_local}}">
+                </a>
+            
+            </div> 
+            
+            <div class='thumbnail-title'>   {{city.city}}    </div>
+             
+        </div>
+        {% endfor %}
+</main>
+{% comment %} the page nav bar {% endcomment %}
+{% include 'journing/page_nav.html'%}
+{% endblock content %}
+
+{% comment %} the index js for smooth scrolling (explore section)  {% endcomment %}
+{% block jscontent%}
+<script src="{% static 'journing/scripts/index.js'%}"></script>
+{% endblock jscontent%}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	{% url 'journing:index' as index_url %}
+	{% comment %} default styling and title {% endcomment %}
+	<head>
+		<title>Journing</title>
+		{% load static %}
+		<link
+		rel="icon"
+		type="image/x-icon"
+		href="{%static 'journing/logos/logo_favicon.png'%}"
+		/>
+		<link rel="stylesheet" href="{% static 'journing/styles/base.css' %}" />
+		{%block headcontent%} {%endblock headcontent%}
+	</head>
+
+{% comment %} body {% endcomment %}
+	<body>
+			{% comment %} nav bar {% endcomment %}
+		<nav class="topnav">
+			{% comment %} left section {% endcomment %}
+			<div class="left-section nav-bar">
+				<div class="logo-container">	
+					<a href="{% url 'journing:index' %}"> <img class="logo" src="{%static 'journing/logos/logo.png' %}" /> </a>
+				</div>
+			</div>
+			{% comment %} middle section {% endcomment %}
+			<div class="middle-section nav-bar">
+				<input id="search-bar-js" type="text" placeholder="Where to?" />
+				<button id="search-button-js" onclick="search('search-bar-js','{{index_url}}')">
+					<img
+						class="search-button-img"
+						src="{% static 'journing/icons/mg.png' %}"
+					/>
+				</button>
+			</div>
+		{% comment %} right section {% endcomment %}
+			<div class="right-section nav-bar">	
+				<a href="{% url 'journing:journal'%}"><img class="list-button-img" src="{% static 'journing/icons/journal.png' %}"/></a>
+				{% if user.notification_set.all%}
+				<div class='noti-button-div'><img class="noti-button-img" src="{% static 'journing/icons/bell.png' %}" >
+				<div class='dot'> </div>
+				</div>
+
+					<div class='all-noti-js'>
+						
+						{% for noti in user.notification_set.all %}
+							<div class='noti-js'> {{noti}}</div>
+
+						{% endfor %}
+					</div>
+				{% else %}
+					<a href='#'><img class="noti-button-img" src="{% static 'journing/icons/bell.png' %}" /></a>
+				{% endif%}
+								
+		{% comment %} authenticated {% endcomment %}
+				{% if user.is_authenticated%}
+
+				<a href="{% url 'userdata:profile' request.user.username %}">
+				<img class="profile-logged-img" src="{{user.profile.profile_pic.url}}"/>
+				</a>
+
+		{% comment %} not authenticated {% endcomment %}
+				{% else %}
+				<a href="{% url 'userdata:login'%}">
+				<img class="profile-unlogged-img" src="{% static 'journing/icons/profile.png'%}"/>
+				</a>
+				{% endif %}
+
+				</div>
+		</nav>
+
+{% comment %} insert content here {% endcomment %}
+		{% block content%} {% endblock content%}
+{% comment %} default js {% endcomment %}
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="{% static 'journing/scripts/search.js'%}"></script>
+		<script src="{% static 'journing/scripts/noti.js'%}"></script>
+
+{% comment %} insert js here {% endcomment %}
+		{% block jscontent%}{%endblock jscontent%}
+	</body>
+</html>

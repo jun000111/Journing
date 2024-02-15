@@ -1,0 +1,15 @@
+{% extends 'userdata/connections.html'%}
+
+{% block profile-pic%}
+<img src="{{connection.user.profile.profile_pic.url}}"></img>
+{% endblock profile-pic%}
+
+{% block name %}
+<h2>{{connection.user}}</h2> 
+{% endblock name%}
+
+{% block button%}
+
+<input id='unfollow-connect' class="connect-js" type="button" value="Unfollow" onclick="get_data('{{connection.follower}}','{{connection.user}}','unfollow')">
+
+{% endblock %}

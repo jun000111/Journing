@@ -1,0 +1,19 @@
+{% extends 'userdata/connections.html'%}
+
+{% block profile-pic%}
+<img src="{{connection.follower.profile.profile_pic.url}}"></img>
+{% endblock profile-pic%}
+
+{% block name %}
+<h2>{{connection.follower}}</h2> 
+{% endblock name%}
+
+{% block button%}
+
+{% if connection.follower.id in following %}
+<input id='unfollow-connect' class="connect-js" type="button" value="Unfollow" onclick="get_data('{{connection.user}}','{{connection.follower}}','unfollow')">
+{% else %}
+<input id='follow-connect' class="connect-js" type="button" value="Follow" onclick="get_data('{{connection.user}}','{{connection.follower}}','follow')">
+{% endif %} 
+
+{% endblock %}

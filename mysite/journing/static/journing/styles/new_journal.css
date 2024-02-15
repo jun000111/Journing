@@ -1,0 +1,73 @@
+@media (min-width:400px){
+    
+    .new-journal{
+        margin: auto;
+        margin-top:300px;
+        width: 600px;
+        height: 370px;
+        text-align: center;
+    }
+
+    .city,.start-date,.end-date{
+        font-size: 30px;
+        margin: 20px 5px;
+        padding: 5px 10px;
+    }
+
+    .submit-div input{
+        font-size: large;
+    }
+}
+@media (min-width:1500px){
+    .new-journal{
+        margin-top:100px;
+        width: 400px;
+        height: 340px;
+    }
+
+    .city,.start-date,.end-date{
+        font-size: 20px;
+    }
+    
+}
+
+
+.new-journal{
+    background-color:rgb(50,50,50);
+    border: none;
+    border-radius: 15px;
+    padding: 20px 30px;
+    display: block;
+    align-items: center;
+    justify-content: center; 
+}
+
+.city:hover,.start-date:hover,.end-date{
+    cursor: pointer;
+}
+.submit-div{
+    margin-top:30px;
+    text-align: center; 
+}
+.submit-div input{
+    background-color: rgb(180, 242, 182);
+    border-radius: 5px;
+    font-weight: 700;
+    border: none;
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+}
+.submit-div input:hover{
+    cursor: pointer;
+}
+
+.submit-div h3{
+    color: black;
+    padding: 5px;
+}
+
+.end-date:nth-child(1){
+    margin-left:12px;
+}
+

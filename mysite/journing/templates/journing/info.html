@@ -1,0 +1,85 @@
+{% extends 'journing/base.html' %} 
+{%load static%}
+
+
+{% block headcontent%}
+
+<link rel='stylesheet' href=" {% static 'journing/styles/info.css'%}">
+<link rel='stylesheet' href=" {% static 'journing/styles/star.css'%}">
+
+{% endblock headcontent%}
+
+{%block content%}
+{% comment %} the section to display the related images,display one main picture and 3 side picture {% endcomment %}
+<header>
+    <div class='left'>        
+        <div class='main-thumbnail'> <img src="{% static 'sightmoreimgs/'%}{{imgs.0}}"> </div>
+        <div class='side-thumbnails'>
+            <div> <img src="{% static 'sightmoreimgs/'%}{{imgs.1}}"> </div>
+            <div> <img src="{% static 'sightmoreimgs/'%}{{imgs.2}}">  </div>
+            <div> <img src="{% static 'sightmoreimgs/'%}{{imgs.3}}"> </div>
+        </div>
+
+    </div>
+
+    <div class='right'>
+        <p class="name"> {{sights_info.name}}</p>
+        <div class="score">
+            <h1>{{item.score}}</h1> 
+            <h4>/5.0</h4>  
+        </div>
+
+        <div class="address"> 
+            <div>Address</div> 
+            <div>{{sights_info.address}}</div> 
+        </div>
+
+        <div class="hours"> 
+            <div>Opening hours</div>  
+            <div>{{sights_info.time}}</div>
+        </div>
+
+        <div class="contacts"> 
+            <div>Contacts</div> 
+            <div>{{sights_info.tele}}</div>
+        </div> 
+        
+        <div class="pop">
+            <div class="pop-score">{{item.popularity}}</div> 
+            <div class="ppl"> <a href="{% url 'journing:sights_comments' sights_info.id slug %}"> People's Opinion </a></div>
+        </div>
+    </div>
+{% comment %} another place to mark the collection {% endcomment %}
+<div class='select-star-js' onclick="get_data('{{item.id}}','{{user.id}}')">
+    {% include 'journing/star.html'%}
+</div> 
+</header>
+
+<main>
+
+{% comment %} display the title and description for the sight page {% endcomment %}
+    {% autoescape off %}
+    {% for i in info%}
+
+        <div class='info-title'> <h1>{{i.0}} </h1></div>
+
+        <div class='info-desc'>{{i.1}}</div>
+        <br>
+
+    {% endfor%}
+    {% endautoescape %}
+
+</main>
+
+{%endblock content%}
+
+{% comment %} star variables and js to mark collection {% endcomment %}
+{% block jscontent%}
+<script>
+    
+    let lit = "{% static 'journing/icons/selected-star.png' %}"
+    let unlit = "{% static 'journing/icons/unselected-star.png' %}"
+    
+</script>
+<script src="{% static 'journing/scripts/star.js'%}"></script>
+{% endblock jscontent%}

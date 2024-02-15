@@ -1,0 +1,114 @@
+{% extends 'journing/base.html'%}
+{% load static%}
+
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'userdata/styles/peek.css'%}">
+{% endblock headcontent%}
+
+{% block content%}
+
+<main class='main-box'>
+{% comment %} upper part {% endcomment %}
+
+        <div class='profile'> 
+
+    {% comment %} profile upper  {% endcomment %}
+
+            <div class= 'profile-connection'>
+                <div class="profile-img-div">
+                    <img src="{{target_user.profile.profile_pic.url}}">
+                </div>
+
+                <div class='connection'>
+
+                    <div>
+                    <h2> Follower </h2>
+                    <h3>{{followers}}</h3>
+                    </div>
+                    
+                    <div>
+                    <h2> Following </h2>
+                    <h3>{{following}}</h3>
+                    </div>
+
+                    <div>
+                    <h2> Journal </h2>
+                    <h3>{{target_user.profile.shared}}</h3>
+                    </div>
+                </div>
+
+                {% comment %} follow button {% endcomment %}
+                {% if is_following %}
+                <input id='connect-js' type="button" value="Unfollow">
+                {% else %}
+                <input id='connect-js' type="button" value="Follow">
+                {% endif %}
+                
+                </div>
+                {% comment %} profile lower {% endcomment %}
+                
+            <div class="profile-details">
+                <h3> {{target_user}} </h3>
+                
+                {% if target_user.profile_gender%}
+                <h3> Male </h3>
+                {% else%}
+                <h3> Female </h3>
+                {% endif %}
+                
+                {% if target_user.profile.city%}
+                <h3> {{target_user.profile.city}} </h3>
+                {% endif %}
+                
+                {% if target_user.profile.website%}
+                <h3> {{target_user.profile.website}} </h3>
+                {% endif %}
+                
+                {% if not target_user.profile.desc == 'Write some details about yourself'%}
+                <h3> <i>"{{target_user.profile.desc}}"</i></h3>
+                {% endif %}
+                
+            </div>
+        </div> 
+
+        <div class="comments">
+            {% for c in target_user.comment_set.all%}
+
+            <div class='comment'>
+
+                <div class='comment-left'> <img src="{% static '/sightimgs/'%}{{c.sight.img_local}}"> </div>
+
+                <div class='comment-right'> 
+                    <h1>{{ c.sight }}</h1>
+
+                    {% if c.comment|length > 300%}
+
+
+                    <a href="{% url 'journing:sight_comment_detail'%}?q={{c.id}}"><h4>{{c.comment|slice:":300"}} . . .</h4></a>
+
+                    {% else %}
+
+                    <a href="{% url 'journing:sight_comment_detail'%}?q={{c.id}}"><h4>{{c.comment}}</h4></a>
+
+                    {% endif %}
+
+                    
+                </div>
+                
+            </div>
+
+            {% endfor %}
+        </div>
+
+</main>
+
+{% endblock content%}
+{% comment %} peek.js for follow or unfollow {% endcomment %}
+{% block jscontent%}
+
+<script>
+    let user = "{{user}}"
+    let target_user = "{{target_user}}"
+</script>
+<script src="{% static 'userdata/scripts/peek.js'%}"></script>
+{% endblock jscontent%}
